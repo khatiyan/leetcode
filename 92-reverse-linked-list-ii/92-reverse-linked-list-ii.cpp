@@ -10,18 +10,6 @@
  */
 class Solution {
 public:
-      ListNode* reverse( ListNode* &head){
-                ListNode*prev=NULL;
-             ListNode*curr=head;
-           ListNode*forward=head;
-          while(curr!=NULL){
-              forward=curr->next;
-              curr->next=prev;
-              prev=curr;
-              curr=forward;
-          }
-          return prev;
-      }
     ListNode* reverseBetween(ListNode* head, int left, int right) {
         // if(head->next==NULL)
         //     return head;
@@ -42,21 +30,28 @@ public:
         if(head== NULL || left==right )
             return head;
         
-                 ListNode* prev, *tail = NULL, *temp = NULL;
-        ListNode dummy(NULL);
-        prev = &dummy;
-        dummy.next = head;
-        for(int i=0; i < left-1; i++){
-            prev = prev->next;
+        vector<int> v;
+        ListNode *temp = head;
+        ListNode* temp1;
+        for(int i = 0;i<left-1;i++)
+        {
+            temp = temp->next;
         }
-        tail = prev->next;
-        for(int i=0; i< right - left;i++){
-            temp = prev->next;
-            prev->next = tail->next;
-            tail->next = tail->next->next;
-            prev->next->next = temp; 
+        temp1=temp;
+        for(int i=0;i<(right-left)+1;i++){
+          v.push_back(temp->val);
+            temp=temp->next;
         }
+        for(int i:v){
+           cout<<i<<" ";
+        }
+        reverse(v.begin(),v.end());
         
-        return dummy.next;
+          for(int i=0;i<v.size();i++){
+            temp1->val = v[i];
+              temp1 = temp1->next;
+        }
+        return head;
+        
     }
 };
